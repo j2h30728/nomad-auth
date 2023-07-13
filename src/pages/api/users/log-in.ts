@@ -9,9 +9,9 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const { email, name } = req.body;
+  const { email } = req.body;
 
-  if (!email || !name) {
+  if (!email) {
     return res
       .status(404)
       .json({ isSuccess: false, message: "잘못된 입력입니다." });
@@ -28,6 +28,8 @@ async function handler(
       message: "잘못된 입력입니다.",
     });
   }
+  req.session.user = { id: user.id };
+  await req.session.save();
 
   return res
     .status(200)

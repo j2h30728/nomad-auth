@@ -1,5 +1,11 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+
+import { METHOD } from "@/constants";
+import useMutation from "@/libs/client/useMutation";
+import { ResponseType } from "@/libs/server/withHandler";
 
 export interface AccountForm {
   name: string;
@@ -8,10 +14,24 @@ export interface AccountForm {
 
 export default function CreateAccount() {
   const { handleSubmit, register } = useForm<AccountForm>();
-  const handleCreateAccount = (accountData: AccountForm) => {
-    console.log(accountData);
-  };
+  const router = useRouter();
 
+  const [mutate, { data, isLoading, error }] = useMutation<ResponseType>(
+    "/api/users/create-account"
+  );
+
+  const handleCreateAccount = async (accountData: AccountForm) => {
+    mutate(accountData, METHOD.POST);
+  };
+  useEffect(() => {
+    if (data) {
+      if (data.isSuccess) {
+        router.push("/log-in");
+      } else {
+        alert(data?.message);
+      }
+    }
+  }, [data, router]);
   return (
     <>
       <h1>Create Account</h1>

@@ -2,11 +2,11 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 export type ResponseType = {
   isSuccess: boolean;
-  message: string;
+  message?: string;
   [key: string]: any;
 };
 
-type Method = "GET" | "POST" | "PATCH" | "DELETE";
+export type Method = "GET" | "POST" | "PATCH" | "DELETE";
 interface ConfigType {
   methods: Method[];
   handler: NextApiHandler;
@@ -28,7 +28,7 @@ export default function withHandler({
     if (isPrivate && !req.session.user) {
       return res
         .status(401)
-        .json({ isSuccess: false, message: "잘못된 접근입니다." });
+        .json({ isSuccess: false, message: "aaaa잘못된 접근입니다." });
     }
     try {
       await handler(req, res);
