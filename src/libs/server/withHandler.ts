@@ -1,10 +1,10 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
-export type ResponseType = {
+export interface ResponseType {
   isSuccess: boolean;
   message?: string;
   [key: string]: any;
-};
+}
 
 export type Method = "GET" | "POST" | "PATCH" | "DELETE";
 interface ConfigType {
