@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-interface AccountForm {
+
+export interface AccountForm {
   name: string;
   email: string;
 }
